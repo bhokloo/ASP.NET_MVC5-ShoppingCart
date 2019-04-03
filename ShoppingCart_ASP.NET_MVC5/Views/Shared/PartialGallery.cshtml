@@ -1,0 +1,38 @@
+﻿@using ShoppingCart_ASP.NET_MVC5.Models
+@model ShoppingCart_ASP.NET_MVC5.Models.Product
+
+
+<table>
+    @{
+        if ((List<Product>)ViewData["partial"] != null)
+        {
+            foreach (var product in (List<Product>)ViewData["partial"])
+
+            {
+
+                <tr>
+
+                    <td>@product.pro_id</td>
+
+                    <td>@product.pro_name</td>
+
+                    <td>@product.pro_desc</td>
+
+                    <td>@product.pro_price</td>
+
+                    <td><img src="~/images/@product.pro_image" /></td>
+
+                </tr>
+
+            }
+
+        }
+
+    }
+
+
+
+
+
+
+</table>
