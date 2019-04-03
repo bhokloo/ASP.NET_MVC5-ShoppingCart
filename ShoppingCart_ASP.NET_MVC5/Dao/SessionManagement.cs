@@ -27,9 +27,12 @@ namespace ShoppingCart_ASP.NET_MVC5.Controllers
 
 
         //Destroying Session
-        public static void RemoveSession(string sessionId)
+        public static void RemoveSession(string sessionId, string username)
         {
-            Debug.WriteLine("remove session " + sessionId);
+            HttpCookie cookie = new HttpCookie("customer_id");
+            cookie.Expires = DateTime.Now.AddDays(-1);
+            HttpContext.Current.Response.Cookies.Add(cookie);
+
             using (SqlConnection conn = new SqlConnection("Server=.; Database=ShoppingCartT4; Integrated Security=true"))
             {
                 conn.Open();

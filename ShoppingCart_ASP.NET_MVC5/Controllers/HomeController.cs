@@ -34,6 +34,10 @@ namespace ShoppingCart_ASP.NET_MVC5.Controllers
                 return View();
             }
 
+            HttpCookie cookie = new HttpCookie("customer_id");
+            cookie.Value = customer.customer_id.ToString();
+            HttpContext.Response.Cookies.Add(cookie);
+
             List<Product> prolist = ProductDetails.callme();
             ViewData["pl"] = prolist;
             string sessionId = SessionManagement.CreateSession(customer.customer_id);

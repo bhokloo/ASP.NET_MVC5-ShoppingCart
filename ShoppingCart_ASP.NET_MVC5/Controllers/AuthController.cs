@@ -23,9 +23,9 @@ namespace ShoppingCart_ASP.NET_MVC5.Controllers
         }
         
         //Logout
-        public ActionResult Logout(string sessionId)
+        public ActionResult Logout(string sessionId, string username)
         {
-            SessionManagement.RemoveSession(sessionId);
+            SessionManagement.RemoveSession(sessionId,username);
             return View("Login");
         }
 

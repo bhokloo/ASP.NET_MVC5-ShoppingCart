@@ -1,0 +1,31 @@
+﻿
+@using ShoppingCart_ASP.NET_MVC5.Models;
+@{
+    <div class="container">
+        <div class="row display-flex">
+            @foreach (var product in ViewBag.cart)
+            {
+                <div class="col-sm-4">
+                    <table>
+                        <tr>
+                            <td>$@product.pro_price.00</td>
+                            <td>@product.pro_name</td>
+                            <td>@product.pro_desc</td>
+                            <td>@product.pro_id</td>
+                        </tr>
+                        <tr>
+                            <td><img src="~/images/@product.pro_image" /></td>
+                            <td><button onclick="incrementCookie(@product.pro_id)" name="compare">ADD</button></td>
+
+                        </tr>
+                    </table>
+                </div>
+
+            }
+
+        </div>
+    </div>
+
+    @Html.ActionLink("Purchases", "Checkout", "Purchase", "", null)
+}
+
