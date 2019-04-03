@@ -2,7 +2,17 @@
 
 
 
+<style>
+    .row.display-flex {
+        display: flex;
+        flex-wrap: wrap;
+    }
 
+        .row.display-flex > [class*='col-'] {
+            display: flex;
+            flex-direction: column;
+        }
+</style>
 
 @{
 
@@ -40,33 +50,21 @@
 
     {
 
-        <table>
+        <div class="container">
+            <div class="row display-flex">
+                @foreach (var product in (List<Product>)ViewData["pl"])
+                {
+                    <div class="col-sm-4">
+                        <p>@product.pro_id</p>
+                        <h1>@product.pro_name</h1>
+                        <p>@product.pro_desc</p>
+                        <p>@product.pro_price</p>
+                        <p><img src="~/images/@product.pro_image" /></p>
+                    </div>
+                }
 
-            @foreach (var product in (List<Product>)ViewData["pl"])
-
-            {
-
-                <tr>
-
-                    <td>@product.pro_id</td>
-
-                    <td>@product.pro_name</td>
-
-                    <td>@product.pro_desc</td>
-
-                    <td>@product.pro_price</td>
-
-                    <td><img src="~/images/@product.pro_image" /></td>
-
-                </tr>
-
-            }
-
-
-
-
-
-        </table>
+            </div>
+        </div>
 
     }
 

@@ -3,6 +3,8 @@
 @{
 
     ViewBag.Title = "Login";
+    string errormsg = (string)ViewData["warning"];
+}
 
 }
 
@@ -16,72 +18,39 @@
 
 {
 
-    @Html.AntiForgeryToken()
-
-
-
-    <div class="form-horizontal">
-
-        <h4>Customer</h4>
-
-        <hr />
-
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-
-
-
-
-        <div class="form-group">
-
-            @Html.LabelFor(model => model.username, htmlAttributes: new { @class = "control-label col-md-2" })
-
-            <div class="col-md-10">
-
-                @Html.TextBoxFor(model => model.username, new { htmlAttributes = new { @class = "form-control" } })
-
-                @Html.ValidationMessageFor(model => model.username, "", new { @class = "text-danger" })
-
-            </div>
-
+    <div class="row">
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.username)
         </div>
-
-
-
-        <div class="form-group">
-
-            @Html.LabelFor(model => model.password, htmlAttributes: new { @class = "control-label col-md-2" })
-
-            <div class="col-md-10">
-
-                @Html.PasswordFor(model => model.password, new { htmlAttributes = new { @class = "form-control" } })
-
-                @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
-
-            </div>
-
+        <div class="col-sm-3">
+            @Html.TextBoxFor(model => model.username)
         </div>
-
-
-
-        <div class="form-group">
-
-            <div class="col-md-offset-2 col-md-10">
-
-                <input type="submit" value="Login" class="btn btn-default" />
-
-            </div>
-
+        <div class="col-sm-6">
+            @Html.ValidationMessageFor(model => model.username)
         </div>
+    </div>
 
+    <div class="row">
+        <div class="col-sm-3">
+            @Html.LabelFor(model => model.password)
+        </div>
+        <div class="col-sm-3">
+            @Html.PasswordFor(model => model.password)
+        </div>
+        <div class="col-sm-6">
+            @Html.ValidationMessageFor(model => model.password)
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <input type="submit" value="Login" class="btn btn-default pull-right" />
+        </div>
+        <div class="col-sm-6">@errormsg</div>
     </div>
 
 }
 
-
-
 <div>
-
     @Html.ActionLink("Back to List", "Index")
-
 </div>

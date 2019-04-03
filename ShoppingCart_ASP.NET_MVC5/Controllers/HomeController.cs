@@ -16,14 +16,23 @@ namespace ShoppingCart_ASP.NET_MVC5.Controllers
         [HttpPost]
         public ActionResult Home(string username, string password)
         {
-            Debug.WriteLine("HttpPost Method");
-
             if (username == null)
                 return View();
 
             Customer customer = CustomerDetails.GetCustomer(username);
-            if (customer.password != CalculateMD5Hash(password).ToLower())
+            if (customer.username != null)
+            {
+                if (customer.password != CalculateMD5Hash(password).ToLower())
+                {
+                    ViewData["warning"] = "Invalid password";
+                    return View();
+                }
+            }
+            else
+            {
+                ViewData["warning"] = "Invalid username";
                 return View();
+            }
 
             List<Product> prolist = ProductDetails.callme();
             ViewData["pl"] = prolist;
