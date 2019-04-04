@@ -6,9 +6,18 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+
+    <style>
+        .navbar {
+            color: darkgrey;
+            font-size:30px;
+
+        }
+
+    </style>
 </head>
-<body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+<body style="background-color:lightgrey; color: grey">
+    <div class="navbar navbar-light navbar-fixed-top" style="background-color: lightgrey;">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -16,22 +25,24 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
+                <div class="container">
+                    <span class="label label-default" style="background-color:darkgray;font-size:13px;">Indrajit Maurya</span>
+                    <span class="label label-default" style="background-color:darkgray;font-size:13px;">Guan Yangyue</span>
+                    <span class="label label-default" style="background-color:darkgray;font-size:13px;">Swati Subramaniam</span>
+                    <span class="label label-default" style="background-color:darkgray;font-size:13px;">Wang hanguye</span>
+
+
+                </div>
             </div>
         </div>
     </div>
     <div class="container body-content">
         @RenderBody()
         <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        <footer style="text-align:center">
+            <p>&copy; @DateTime.Now.Year -Shopping Cart Application | National University of Singapore | SA48 | Team 4A</p>
         </footer>
     </div>
 

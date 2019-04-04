@@ -8,7 +8,8 @@ using System.Web.Mvc;
 
 namespace ShoppingCart_ASP.NET_MVC5.Controllers
 {
-    public class SessionManagement { 
+    public class SessionManagement
+    { 
         //Creating Session
         public static string CreateSession(int customer_id)
         {
@@ -27,12 +28,14 @@ namespace ShoppingCart_ASP.NET_MVC5.Controllers
 
 
         //Destroying Session
-        public static void RemoveSession(string sessionId, string username)
+        public static void RemoveSession(string sessionId)
         {
-            HttpCookie cookie = new HttpCookie("customer_id");
-            cookie.Expires = DateTime.Now.AddDays(-1);
-            HttpContext.Current.Response.Cookies.Add(cookie);
-
+            foreach (string key in HttpContext.Current.Request.Cookies.AllKeys)
+            {
+                HttpCookie c = HttpContext.Current.Request.Cookies[key];
+                c.Expires = DateTime.Now.AddMonths(-1);
+                HttpContext.Current.Response.AppendCookie(c);
+            } 
             using (SqlConnection conn = new SqlConnection("Server=.; Database=ShoppingCartT4; Integrated Security=true"))
             {
                 conn.Open();

@@ -7,48 +7,74 @@
 }
 
 
+<div class="jumbotron jumbotron-fluid">
+    <div class="container-fluid">
+        <br/>
+         <div class="row">
+             <div class="col-lg-6">
+                 <div class="container-fluid">
+                     <center><h1 style="font-family:Calibri">Just Cart </h1>
+                     <img src="~/Images/cart.png" style="width:50%">
+                </div>
+              </div>
 
-<h2>Login</h2>
+                 <div class="col-lg-6">
+                     @using (Html.BeginForm("Login", "Auth", FormMethod.Post))
+                     {
+                         <div class="container-fluid" >
+                             <center>
+                                 <br/>
+                                 <div style="border:1px solid lightgrey;background-color:darkgray;border-radius:30px;padding:50px; box-shadow: 0 1px 9px 0 rgba(0, 0, 0, 0.6), 0 1px 10px 0 rgba(0, 0, 0, 0.19);">
+                                     <div class="row">
 
 
+                                         @*<div class="col-sm-3">
+                                            @Html.LabelFor(model => model.username , new { @class = "form-control", @placeholder = "ID:" } )
+                                        </div>*@
+                                         <div class="col-sm-12">
 
-@using (Html.BeginForm("Home", "Home", FormMethod.Post))
+                                             @Html.TextBoxFor(model => model.username, new { @class = "form-control", @placeholder = " Username" })
+                                             
+                                         </div>
+                                     </div>
+                                     <div class="row">
+                                         <div class="col-sm-12">
+                                             @Html.ValidationMessageFor(model => model.username)
+                                         </div>
+                                     </div>
+                                     <br />
 
-{
+                                     <div class="row">
+                                         @*<div class="col-sm-3">
+                                        @Html.LabelFor(model => model.password, new { @class = "form-control" })
+                                    </div>*@
+                                         <div class="col-sm-12">
+                                             @Html.PasswordFor(model => model.password, new { @class = "form-control", @placeholder = " Password" })
+                                         </div>
+                                     </div>
+                                     <div class="row">
+                                         <div class="col-sm-12">
+                                             @Html.ValidationMessageFor(model => model.password)
+                                         </div>
+                                     </div>
+                                     <br />
+                                     <div class="row">
+                                         <div class="col-sm-12">
+                                             <input type="submit" style="width:20%;color:slategrey" value="Login" class="btn btn-default" />
+                                         </div>
+                                     </div>
+                                     <div class="row">
+                                         <div class="col-sm-12">@errormsg</div>
+                                     </div>
+                                 </div>
+                             </center>
+                         </div>
+                     }
+                 </div>
 
-    <div class="row">
-        <div class="col-sm-3">
-            @Html.LabelFor(model => model.username)
+             </div>  
+        <br/>
+        <br/>
         </div>
-        <div class="col-sm-3">
-            @Html.TextBoxFor(model => model.username)
-        </div>
-        <div class="col-sm-6">
-            @Html.ValidationMessageFor(model => model.username)
-        </div>
-    </div>
+  </div>
 
-    <div class="row">
-        <div class="col-sm-3">
-            @Html.LabelFor(model => model.password)
-        </div>
-        <div class="col-sm-3">
-            @Html.PasswordFor(model => model.password)
-        </div>
-        <div class="col-sm-6">
-            @Html.ValidationMessageFor(model => model.password)
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-sm-6">
-            <input type="submit" value="Login" class="btn btn-default pull-right" />
-        </div>
-        <div class="col-sm-6">@errormsg</div>
-    </div>
-
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>

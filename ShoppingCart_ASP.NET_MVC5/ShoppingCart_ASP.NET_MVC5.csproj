@@ -150,6 +150,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\cart.png" />
+    <Content Include="Images\charts.png" />
     <Content Include="Images\toothpaste.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -181,6 +183,7 @@
     <Content Include="Views\Auth\Login.cshtml" />
     <Content Include="Views\Home\Home.cshtml" />
     <Content Include="Views\Purchase\ViewCart.cshtml" />
+    <Content Include="Views\Purchase\MyPurchases.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

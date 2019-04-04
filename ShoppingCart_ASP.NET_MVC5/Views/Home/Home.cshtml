@@ -14,8 +14,10 @@
         }
 </style>
 
-@Html.ActionLink("Cart", "ViewCart", "Purchase","", null)
-Cart<p id="count" class="badge">0</p>
+
+@Html.ActionLink("Shopping Cart", "ViewCart", "Purchase", "", null)<span class="glyphicon glyphicon-shopping-cart" style="font-size:20px;"></span>
+
+<p id="count" value="" class="badge">@ViewBag.Count</p>
 
 @{
 
@@ -30,7 +32,7 @@ Cart<p id="count" class="badge">0</p>
 
 
 
-@Html.ActionLink("Logout", "Logout", "Auth", new { sessionId = @sessionId, username = @ViewBag.customer }, null)
+@Html.ActionLink("Logout", "Logout", "Auth", new { sessionId = @sessionId }, null)
 
 @Html.ActionLink("Purchases", "Purchase", "Purchase", new { customer_id = @customerid }, null)
 
@@ -47,6 +49,9 @@ Cart<p id="count" class="badge">0</p>
 </form>
 
 
+<br/>
+
+
 
 @{
 
@@ -54,22 +59,24 @@ Cart<p id="count" class="badge">0</p>
 
     {
 
-        <div class="container">
-            <div class="row display-flex">
+        <div class="container-fluid">
+            <divdiv class="row">
                 @foreach (var product in (List<Product>)ViewData["pl"])
                 {
                     <div class="col-sm-4">
-                        <table>
+                        <table class="table table-bordered">
                             <tr>
-                                <td>$@product.pro_price.00</td>
-                                <td>@product.pro_name</td>
-                                <td>@product.pro_desc</td>
-                                <td>@product.pro_id</td>
-                            </tr>
-                            <tr>
-                                <td><img src="~/images/@product.pro_image" /></td>
-                                <td><button onclick="incrementCookie(@product.pro_id)" name="compare">ADD</button></td>
+                                @*<td><img src="~/images/@product.pro_image" /></td>*@
+                             <td>
+                                <img src="~/images/charts.png" style="width:50%" />
+                                @product.pro_name
+                                @product.pro_desc
+                                @product.pro_id
 
+                                $@product.pro_price.00
+                                <button onclick="incrementCookie(@product.pro_id)" name="compare">ADD</button>
+                               @product.pro_image
+                            </td>
                             </tr>
                         </table>
                     </div>
@@ -77,7 +84,7 @@ Cart<p id="count" class="badge">0</p>
                 }
 
             </div>
-        </div>
+
 
     }
 
@@ -90,14 +97,18 @@ Cart<p id="count" class="badge">0</p>
     }
 
 }
-
-
 <script>
-    var a = 0;
-    function increment() {
-        a = a + 1;
-        document.getElementById("count").innerHTML = a;
 
+    window.onload = function () {
+
+    }
+
+
+
+    function callmeagain(aaa) {
+        aaa = aaa + 1;
+        document.getElementById("count").innerHTML = aaa;
+        return aaa;
     }
 </script>
 
@@ -105,7 +116,8 @@ Cart<p id="count" class="badge">0</p>
 
 
     function incrementCookie(pro_id) {
-        increment();
+        var aaa = parseInt(getCookie("Count"));
+        document.cookie = "Count" + "=" + callmeagain(aaa) + "; Path=/";
 
         if (getCookie(pro_id) == "") {
             document.cookie = pro_id + "=" + 1 + "; Path=/";
@@ -113,6 +125,7 @@ Cart<p id="count" class="badge">0</p>
         else {
             var qty = parseInt(getCookie(pro_id));
             document.cookie = pro_id + "=" + (1 + qty) + "; Path=/";
+
         }
     }
 

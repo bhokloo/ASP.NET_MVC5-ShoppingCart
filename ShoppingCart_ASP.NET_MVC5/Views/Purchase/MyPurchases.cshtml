@@ -1,0 +1,37 @@
+﻿@model ShoppingCart_ASP.NET_MVC5.Models.PurchaseItems
+@using ShoppingCart_ASP.NET_MVC5.Models
+
+My Purchases     @Html.ActionLink("Home", "Home", "Home", "", null) | @Html.ActionLink("Logout", "Logout", "Auth", "", null)
+@{
+    <table>
+        @foreach (var pur in ViewBag.purchases)
+        {
+            <tr>
+                <td rowspan="3">@pur.pro_id<br /><img src="~/images/@pur.pro_image" /><br />@pur.pro_name<br />@pur.pro_desc</td>
+                <td>Date Purchased: @pur.purchase_time.Date.ToString("dd MMM yyyy")</td>
+            </tr>
+            <tr>
+                <td>Quantity: @pur.count</td>
+            </tr>
+            <tr>
+                <td>
+                    @if (pur.count > 1)
+                    {
+                        <select name="cars">
+                            @foreach (var code in pur.activation_code)
+                            {
+                                <option value="@code">@code</option>
+                            }
+                        </select>
+                    }
+                    else
+                    {
+                        foreach (var code in pur.activation_code)
+                        {@code}
+                }
+                </td>
+            </tr>
+        }
+
+    </table>
+} 

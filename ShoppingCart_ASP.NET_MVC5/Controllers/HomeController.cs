@@ -13,56 +13,22 @@ namespace ShoppingCart_ASP.NET_MVC5.Controllers
 {
     public class HomeController : Controller
     {
-        [HttpPost]
-        public ActionResult Home(string username, string password)
+
+        public ActionResult Home()
         {
-            if (username == null)
-                return View();
-
-            Customer customer = CustomerDetails.GetCustomer(username);
-            if (customer.username != null)
-            {
-                if (customer.password != CalculateMD5Hash(password).ToLower())
-                {
-                    ViewData["warning"] = "Invalid password";
-                    return View();
-                }
-            }
-            else
-            {
-                ViewData["warning"] = "Invalid username";
-                return View();
-            }
-
-            HttpCookie cookie = new HttpCookie("customer_id");
-            cookie.Value = customer.customer_id.ToString();
-            HttpContext.Response.Cookies.Add(cookie);
-
             List<Product> prolist = ProductDetails.callme();
             ViewData["pl"] = prolist;
-            string sessionId = SessionManagement.CreateSession(customer.customer_id);
+            string sessionId = SessionManagement.CreateSession(int.Parse(Request.Cookies["customer_id"].Value));
             ViewData["sessionId"] = sessionId;
             ViewBag.a = 1;
-            ViewBag.customer = customer.customer_id;
+            ViewBag.customer = int.Parse(Request.Cookies["customer_id"].Value);
+            ViewBag.Count = int.Parse(Request.Cookies["Count"].Value);
             return View();
 
         }
 
 
-        public string CalculateMD5Hash(string input)
-
-        {
-            MD5 md5 = MD5.Create();
-
-            byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(input);
-            byte[] hash = md5.ComputeHash(inputBytes);
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < hash.Length; i++)
-            {
-                sb.Append(hash[i].ToString("X2"));
-            }
-            return sb.ToString();
-        }
+        
 
 
     }

@@ -1,38 +1,84 @@
 ﻿@using ShoppingCart_ASP.NET_MVC5.Models
 @model ShoppingCart_ASP.NET_MVC5.Models.Product
 
+<style>
 
-<table>
-    @{
-        if ((List<Product>)ViewData["partial"] != null)
-        {
-            foreach (var product in (List<Product>)ViewData["partial"])
+    .row.display-flex {
+        display: flex;
+        flex-wrap: wrap;
+    }
 
+        .row.display-flex > [class*='col-'] {
+            display: flex;
+            flex-direction: column;
+        }
+</style>
+
+<div class="container">
+    <div class="row display-flex">
+        @{
+            if ((List<Product>)ViewData["partial"] != null)
             {
+                foreach (var product in (List<Product>)ViewData["partial"])
+                {
+                    <div class="col-sm-4">
+                        <table>
+                            <tr>
+                                <td>$@product.pro_price</td>
+                                <td>@product.pro_name</td>
+                                <td>@product.pro_desc</td>
+                                <td>@product.pro_id</td>
+                            </tr>
+                            <tr>
+                                <td><img src="~/images/@product.pro_image" /></td>
+                                <td><button onclick="incrementCookie(@product.pro_id)" name="compare">ADD</button></td>
+                            </tr>
+                        </table>
+                    </div>
 
-                <tr>
-
-                    <td>@product.pro_id</td>
-
-                    <td>@product.pro_name</td>
-
-                    <td>@product.pro_desc</td>
-
-                    <td>@product.pro_price</td>
-
-                    <td><img src="~/images/@product.pro_image" /></td>
-
-                </tr>
+                }
 
             }
 
         }
 
+
+
+    </div>
+</div>
+
+<script>
+var a = 0;
+    function increment() {
+        a = a + 1;
+        document.getElementById("count").innerHTML = a;
+
+    }</script>
+<script type="text/javascript">
+function incrementCookie(pro_id) {
+
+        if (getCookie(pro_id) == "") {
+            document.cookie = pro_id + "=" + 1 + "; Path=/";
+        }
+        else {
+            var qty = parseInt(getCookie(pro_id));
+            document.cookie = pro_id + "=" + (1 + qty) + "; Path=/";
+        }
     }
 
+    function getCookie(cname) {
 
-
-
-
-
-</table>
+        var name = cname + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }</script>
