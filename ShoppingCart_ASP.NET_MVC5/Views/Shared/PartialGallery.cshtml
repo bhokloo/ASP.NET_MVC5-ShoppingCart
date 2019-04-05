@@ -13,72 +13,84 @@
             flex-direction: column;
         }
 </style>
-
-<div class="container">
-    <div class="row display-flex">
-        @{
-            if ((List<Product>)ViewData["partial"] != null)
-            {
-                foreach (var product in (List<Product>)ViewData["partial"])
-                {
-                    <div class="col-sm-4">
-                        <table>
-                            <tr>
-                                <td>$@product.pro_price</td>
-                                <td>@product.pro_name</td>
-                                <td>@product.pro_desc</td>
-                                <td>@product.pro_id</td>
-                            </tr>
-                            <tr>
-                                <td><img src="~/images/@product.pro_image" /></td>
-                                <td><button onclick="incrementCookie(@product.pro_id)" name="compare">ADD</button></td>
-                            </tr>
-                        </table>
-                    </div>
-
-                }
-
-            }
-
-        }
-
-
-
+<div class="container-fluid" style="margin-top:80px">
+    <div class="row">
+        <div class="col-sm-12" style="text-align:center;">
+            <i class="glyphicon glyphicon-retweet"></i> @Html.ActionLink("Go Back", "Home", "Home", null, null) &nbsp;&nbsp;
+        </div>
     </div>
 </div>
+<br/>
+            <div class="container-fluid" >
+                <div class="row display-flex">
+                    @{
+                        if ((List<Product>)ViewData["partial"] != null)
+                        {
+                            foreach (var product in (List<Product>)ViewData["partial"])
+                            {
+                                <div class="col-sm-4">
+                                    <table class="table table-bordered" style="border-color:transparent; box-shadow: 0 1px 9px 0 rgba(0, 0, 0, 0.1), 0 1px 10px 0 rgba(0, 0, 0, 0.19);border-top-left-radius:30px;border-top-right-radius:30px;">
 
-<script>
-var a = 0;
-    function increment() {
-        a = a + 1;
-        document.getElementById("count").innerHTML = a;
+                                        <tr style="text-align:center">
+                                            @*<td><img src="~/images/@product.pro_image" /></td>*@
+                                            <td colspan="2" style="border-color:transparent;">
+                                                <img src="~/images/@product.pro_image" style="width:40%" /><br />
+                                                <span style="color:#337ab7">@product.pro_name</span><br />
+                                                <span style="color:indianred">Description : </span>@product.pro_desc<br />
+                                            </td>
+                                        </tr>
+                                        <tr style="text-align:center;color:green;">
+                                            <td style="border:1px solid white;">
+                                                <button style="background-color:lavender;" class="btn btn-outline-success" onclick="incrementCookie(@product.pro_id)" name="compare"><span style="color:indianred">Price :</span> $@product.pro_price.00 &nbsp;&nbsp;&nbsp;<i class="glyphicon glyphicon-shopping-cart"></i></button>
+                                            </td>
+                                        </tr>
 
-    }</script>
-<script type="text/javascript">
-function incrementCookie(pro_id) {
+                                    </table>
+                                </div>
 
-        if (getCookie(pro_id) == "") {
-            document.cookie = pro_id + "=" + 1 + "; Path=/";
-        }
-        else {
-            var qty = parseInt(getCookie(pro_id));
-            document.cookie = pro_id + "=" + (1 + qty) + "; Path=/";
-        }
-    }
+                            }
 
-    function getCookie(cname) {
+                        }
 
-        var name = cname + "=";
-        var decodedCookie = decodeURIComponent(document.cookie);
-        var ca = decodedCookie.split(';');
-        for (var i = 0; i < ca.length; i++) {
-            var c = ca[i];
-            while (c.charAt(0) == ' ') {
-                c = c.substring(1);
-            }
-            if (c.indexOf(name) == 0) {
-                return c.substring(name.length, c.length);
-            }
-        }
-        return "";
-    }</script>
+                    }
+
+
+
+                </div>
+            </div>
+
+            <script>
+                var a = 0;
+                function increment() {
+                    a = a + 1;
+                    document.getElementById("count").innerHTML = a;
+
+                }</script>
+            <script type="text/javascript">
+                function incrementCookie(pro_id) {
+
+                    if (getCookie(pro_id) == "") {
+                        document.cookie = pro_id + "=" + 1 + "; Path=/";
+                    }
+                    else {
+                        var qty = parseInt(getCookie(pro_id));
+                        document.cookie = pro_id + "=" + (1 + qty) + "; Path=/";
+                    }
+                }
+
+                function getCookie(cname) {
+
+                    var name = cname + "=";
+                    var decodedCookie = decodeURIComponent(document.cookie);
+                    var ca = decodedCookie.split(';');
+                    for (var i = 0; i < ca.length; i++) {
+                        var c = ca[i];
+                        while (c.charAt(0) == ' ') {
+                            c = c.substring(1);
+                        }
+                        if (c.indexOf(name) == 0) {
+                            return c.substring(name.length, c.length);
+                        }
+                    }
+                    return "";
+                }</script>

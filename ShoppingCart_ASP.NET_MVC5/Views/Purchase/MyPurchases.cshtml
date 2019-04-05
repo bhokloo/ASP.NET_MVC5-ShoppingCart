@@ -1,37 +1,124 @@
 ﻿@model ShoppingCart_ASP.NET_MVC5.Models.PurchaseItems
 @using ShoppingCart_ASP.NET_MVC5.Models
 
-My Purchases     @Html.ActionLink("Home", "Home", "Home", "", null) | @Html.ActionLink("Logout", "Logout", "Auth", "", null)
+<style>
+    .row.display-flex {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+        .row.display-flex > [class*='col-'] {
+            display: flex;
+            flex-direction: column;
+        }
+</style>
+<div style="position:fixed;top:48px;z-index:100;width:85%;background-color:white;">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12" style="text-align:right;">
+                <i class="glyphicon glyphicon-user"></i> @ViewBag.firstname &nbsp;&nbsp;
+                <i class="glyphicon glyphicon-eye-open"></i>  @Html.ActionLink("Home", "Home", "Home", null, null) &nbsp;&nbsp;
+                <i class="glyphicon glyphicon-log-out"></i>@Html.ActionLink("Logout", "Logout", "Auth", null, null)
+
+            </div>
+        </div>
+        <div class="row" style="padding:10px;">
+            <div class="col-sm-3">
+                <span style="font-family:Century Gothic;font-size:23px;">Just Cart</span>
+            </div>
+            <form action="/Search/Partial" name="Form"   method="post" onsubmit="return validate()">
+                <div class="col-sm-5" style="text-align:right;">
+                    <div class="row display-flex">
+                        <input type="text" class="form-control" id="search" name="search" placeholder="Search.." style="max-width:100%" />
+                    </div>
+
+                </div>
+                <div class="col-sm-1">
+                    <span class="input-group-btn">
+                        <button class="btn btn-search" type="submit" style="border-radius"><i class="glyphicon glyphicon-search"></i>&nbsp;&nbsp; Search</button>
+                    </span>
+                </div>
+            </form>
+            <div class="col-sm-3" style="text-align:right;">
+                <form action="/Purchase/ViewCart" method="get">
+                    <button style="border-color:transparent;border-radius:30px;padding-top:5px;">
+                        <span class="glyphicon glyphicon-shopping-cart">
+                        </span>
+                        <span class="items">
+                            <p id="count" value="" class="badge">
+                                @ViewBag.Count
+                            </p>
+                        </span>
+                    </button>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>   |
 @{
-    <table>
+<div class="container-fluid" style="margin-top:80px">
+    <div class="row display-flex">
+
         @foreach (var pur in ViewBag.purchases)
         {
-            <tr>
-                <td rowspan="3">@pur.pro_id<br /><img src="~/images/@pur.pro_image" /><br />@pur.pro_name<br />@pur.pro_desc</td>
-                <td>Date Purchased: @pur.purchase_time.Date.ToString("dd MMM yyyy")</td>
-            </tr>
-            <tr>
-                <td>Quantity: @pur.count</td>
-            </tr>
-            <tr>
-                <td>
-                    @if (pur.count > 1)
-                    {
-                        <select name="cars">
-                            @foreach (var code in pur.activation_code)
-                            {
-                                <option value="@code">@code</option>
-                            }
-                        </select>
-                    }
-                    else
-                    {
-                        foreach (var code in pur.activation_code)
-                        {@code}
-                }
-                </td>
-            </tr>
-        }
+        <div class="col-sm-4">
+            <table class="table table-bordered" style="border-color:transparent; box-shadow: 0 1px 9px 0 rgba(0, 0, 0, 0.1), 0 1px 10px 0 rgba(0, 0, 0, 0.19);border-top-left-radius:30px;border-top-right-radius:30px;">
+                <tr style="text-align:center">
 
-    </table>
-} 
+                    <td colspan="2" style="border-color:transparent;">
+                        <img src="~/images/@pur.pro_image" style="width:40%" /><br />
+                         <span style="color:#337ab7">@pur.pro_name<br />
+                         <span style="color:indianred">Description : </span>@pur.pro_desc<br/>
+                       
+                    </td>
+                 </tr>
+                <tr style="text-align:center">
+                    <td><button style="border-color:transparent">Purchased Quantity:<br/> <span style="color:green">@pur.count</span></button></td>
+                    <td><button style="border-color:transparent">Date Purchased: <br /><span  style="color:indianred">@pur.purchase_time.Date.ToString("dd MMM yyyy")</span></button></td>
+
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align:center">
+                        @if (pur.count > 1)
+                        {
+                            <select name="cars" class="form-control" style="width:100%;">
+                                @foreach (var code in pur.activation_code)
+                                {
+                                    <option value="@code">@code</option>
+                                }
+                            </select>
+                        }
+                        else
+                        {
+                            foreach (var code in pur.activation_code)
+                            {@code}
+                        }
+                    </td>
+                </tr>
+
+
+            </table>
+
+            </div>
+
+        }
+        </div>
+</div>
+    }
+
+<script>
+
+    function validate() {
+
+        var a = document.forms["Form"]["search"].value;
+        if (a == null || a == "") {
+            alert("Please enter a search item in the search box..");
+            return false;
+        }
+        return true; 
+
+       
+    }
+</script>

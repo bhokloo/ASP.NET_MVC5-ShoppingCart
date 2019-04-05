@@ -17,7 +17,7 @@ namespace ShoppingCart_ASP.NET_MVC5.Controllers
             using (SqlConnection conn = new SqlConnection(("Server=.; Database=ShoppingCartT4; Integrated Security=true")))
             {
                 conn.Open();
-                string sql = @"SELECT customer_id, username, password from Customer WHERE username = '" + username + "'";
+                string sql = @"SELECT customer_id, username, firstname, password from Customer WHERE username = '" + username + "'";
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 SqlDataReader reader = cmd.ExecuteReader();
                 if (reader.Read())
@@ -26,7 +26,8 @@ namespace ShoppingCart_ASP.NET_MVC5.Controllers
                     {
                         customer_id = (int)reader["customer_id"],
                         username = (string)reader["username"],
-                        password = (string)reader["password"]
+                        password = (string)reader["password"],
+                        firstname = (string)reader["firstname"]
                     };
                 }
             }

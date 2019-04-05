@@ -10,6 +10,7 @@ using System.Data.SqlClient;
 
 namespace ShoppingCart_ASP.NET_MVC5.Controllers
 {
+    [SessionExpire]
     public class PurchaseController : Controller
     {
         public ActionResult Purchase(string customer_id)
@@ -19,6 +20,7 @@ namespace ShoppingCart_ASP.NET_MVC5.Controllers
             return View();
         }
 
+       
         public ActionResult ViewCart()
         {
             HttpCookieCollection cookies = Request.Cookies;
@@ -50,6 +52,8 @@ namespace ShoppingCart_ASP.NET_MVC5.Controllers
                     }
                 }
             }
+            ViewBag.customer = int.Parse(Request.Cookies["customer_id"].Value);
+            ViewBag.firstname = Request.Cookies["firstname"].Value;
             ViewBag.Count = int.Parse(Request.Cookies["Count"].Value);
             ViewBag.cart = pro;
             return View();
@@ -76,7 +80,7 @@ namespace ShoppingCart_ASP.NET_MVC5.Controllers
                         {
                             conn.Open();
                             string sql = @"INSERT INTO Purchaseitem (customer_id,pro_id,activation_code,purchase_time) " +
-                                "values (" + customer + "," + i + ",'" + guid + "','" + DateTime.Now.ToString("yyyy-mm-dd") + "');";
+                                "values (" + customer + "," + i + ",'" + guid + "','" + DateTime.Now.ToString("yyyy/MM/dd") + "');";
                             SqlCommand cmd = new SqlCommand(sql, conn);
                             SqlDataReader reader = cmd.ExecuteReader();
                             while (reader.Read())
@@ -95,6 +99,20 @@ namespace ShoppingCart_ASP.NET_MVC5.Controllers
                     }
                 }
             }
+            foreach (string key in HttpContext.Request.Cookies.AllKeys)
+            {
+                if (key != "customer_id" && key != "firstname")
+                {
+                    HttpCookie c = HttpContext.Request.Cookies[key];
+
+                    c.Expires = DateTime.Now.AddMonths(-1);
+                    HttpContext.Response.AppendCookie(c);
+                }
+                HttpCookie Count = new HttpCookie("Count");
+                Count.Value = "0";
+                HttpContext.Response.Cookies.Add(Count);
+            }
+
             return RedirectToAction("MyPurchases");
         }
 
@@ -124,7 +142,7 @@ namespace ShoppingCart_ASP.NET_MVC5.Controllers
                     {
                         conn1.Open();
 
-                        string sql1 = @"select activation_code from Purchaseitem where purchase_time='" + singleitem.purchase_time.ToString("MM/dd/yyyy") + "' and pro_id = '" + singleitem.pro_id + "'";
+                        string sql1 = @"select activation_code from Purchaseitem where purchase_time='" + singleitem.purchase_time.ToString("yyyy-MM-dd") + "' and pro_id = '" + singleitem.pro_id + "' and customer_id='" +customer_id+"'";
                         SqlCommand cmd1 = new SqlCommand(sql1, conn);
                         SqlDataReader reader1 = cmd1.ExecuteReader();
 
@@ -140,6 +158,8 @@ namespace ShoppingCart_ASP.NET_MVC5.Controllers
 
             }
             ViewBag.purchases = allitems;
+            ViewBag.Count = int.Parse(Request.Cookies["Count"].Value);
+            ViewBag.firstname = Request.Cookies["firstname"].Value;
             return View();
         }
 

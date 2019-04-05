@@ -12,12 +12,8 @@
             display: flex;
             flex-direction: column;
         }
+
 </style>
-
-
-@Html.ActionLink("Shopping Cart", "ViewCart", "Purchase", "", null)<span class="glyphicon glyphicon-shopping-cart" style="font-size:20px;"></span>
-
-<p id="count" value="" class="badge">@ViewBag.Count</p>
 
 @{
 
@@ -29,122 +25,149 @@
     var customerid = ViewBag.customer;
 
 }
-
-
-
-@Html.ActionLink("Logout", "Logout", "Auth", new { sessionId = @sessionId }, null)
-
-@Html.ActionLink("Purchases", "Purchase", "Purchase", new { customer_id = @customerid }, null)
-
-
-
-<input type="hidden" value="@sessionId" />
-
-<form action="/Search/Partial" method="post">
-
-    <input type="text" id="search" name="search" />
-
-    <input type="submit" value="Search" />
-
-</form>
-
-
-<br/>
-
-
-
-@{
-
-    if (ViewBag.a == 1)
-
-    {
-
-        <div class="container-fluid">
-            <divdiv class="row">
-                @foreach (var product in (List<Product>)ViewData["pl"])
-                {
-                    <div class="col-sm-4">
-                        <table class="table table-bordered">
-                            <tr>
-                                @*<td><img src="~/images/@product.pro_image" /></td>*@
-                             <td>
-                                <img src="~/images/charts.png" style="width:50%" />
-                                @product.pro_name
-                                @product.pro_desc
-                                @product.pro_id
-
-                                $@product.pro_price.00
-                                <button onclick="incrementCookie(@product.pro_id)" name="compare">ADD</button>
-                               @product.pro_image
-                            </td>
-                            </tr>
-                        </table>
-                    </div>
-
-                }
+<div style="position:fixed;top:48px;z-index:100;width:85%;background-color:white;">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12" style="text-align:right;">
+                <i class="glyphicon glyphicon-user"></i> @ViewBag.firstname &nbsp;&nbsp;
+                <i class="glyphicon glyphicon-eye-open"></i> @Html.ActionLink("Purchases", "Mypurchases", "Purchase", new { customer_id = @customerid }, null) &nbsp;&nbsp;
+                <i class="glyphicon glyphicon-log-out"></i> @Html.ActionLink("Logout", "Logout", "Auth", new { sessionId = @sessionId }, null)
 
             </div>
+        </div>
+        <div class="row" style="padding:10px;">
+                <div class="col-sm-3"><span style="font-family:Century Gothic;font-size:23px;">Just Cart</span>
+                </div>
+                <form action="/Search/Partial" name="Form" method="post" onsubmit="return validate()">
+                    <div class="col-sm-5" style="text-align:right;">
+                        <div class="row display-flex">
+                            <input type="text" class="form-control" id="search" name="search" placeholder="Search.." style="max-width:100%" />
+                        </div>
+
+                    </div>
+                    <div class="col-sm-1">
+                        <span class="input-group-btn">
+                            <button class="btn btn-search" type="submit" style="border-radius"><i class="glyphicon glyphicon-search"></i>&nbsp;&nbsp; Search</button>
+                        </span>
+                    </div>
+                </form>
+                <div class="col-sm-3" style="text-align:right;">
+                    <form action="/Purchase/ViewCart" method="get">
+                        <button style="border-color:transparent;border-radius:30px;padding-top:5px;">
+                            <span class="glyphicon glyphicon-shopping-cart">
+                            </span>
+                            <span class="items">
+                                <p id="count" value="" class="badge">
+                                    @ViewBag.Count
+                                </p>
+                            </span>
+                        </button>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
 
 
-    }
+    @{
 
-    else
+        if (ViewBag.a == 1)
 
-    {
+        {
 
-        @Html.Partial("PartialGallery")
+            <div class="container-fluid" style="margin-top:80px">
+                <div class="row display-flex">
+                    @foreach (var product in (List<Product>)ViewData["pl"])
+                    {
+                        <div class="col-sm-4">
+                            <table class="table table-bordered" style="border-color:transparent; box-shadow: 0 1px 9px 0 rgba(0, 0, 0, 0.1), 0 1px 10px 0 rgba(0, 0, 0, 0.19);border-top-left-radius:30px;border-top-right-radius:30px;">
 
-    }
+                                <tr style="text-align:center">
+                                    <td colspan="2" style="border-color:transparent;">
+                                        <img src="~/images/@product.pro_image" style="width:40%" /><br />
+                                       <span style="color:#337ab7">@product.pro_name</span><br />
+                                        <span style="color:indianred">Description : </span>@product.pro_desc<br /></td>
+                                </tr>
+                                <tr style="text-align:center;color:green;">
+                                    <td style="border:1px solid white;">
+                                        <button style="background-color:lavender;" class="btn btn-outline-success" onclick="incrementCookie(@product.pro_id)" name="compare"><span style="color:indianred">Price :</span> $@product.pro_price &nbsp;&nbsp;&nbsp;<i class="glyphicon glyphicon-shopping-cart"></i></button>
+                                    </td>
+                                </tr>
 
-}
-<script>
+                            </table>
+                        </div>
 
-    window.onload = function () {
+                    }
 
-    }
+                </div>
 
-
-
-    function callmeagain(aaa) {
-        aaa = aaa + 1;
-        document.getElementById("count").innerHTML = aaa;
-        return aaa;
-    }
-</script>
-
-<script type="text/javascript">
-
-
-    function incrementCookie(pro_id) {
-        var aaa = parseInt(getCookie("Count"));
-        document.cookie = "Count" + "=" + callmeagain(aaa) + "; Path=/";
-
-        if (getCookie(pro_id) == "") {
-            document.cookie = pro_id + "=" + 1 + "; Path=/";
+            </div>
         }
-        else {
-            var qty = parseInt(getCookie(pro_id));
-            document.cookie = pro_id + "=" + (1 + qty) + "; Path=/";
+
+        else
+
+        {
+
+            @Html.Partial("PartialGallery")
 
         }
+
     }
+    <script>
 
-    function getCookie(cname) {
 
-        var name = cname + "=";
-        var decodedCookie = decodeURIComponent(document.cookie);
-        var ca = decodedCookie.split(';');
-        for (var i = 0; i < ca.length; i++) {
-            var c = ca[i];
-            while (c.charAt(0) == ' ') {
-                c = c.substring(1);
+        function callmeagain(aaa) {
+            aaa = aaa + 1;
+            document.getElementById("count").innerHTML = aaa;
+            return aaa;
+        }
+    </script>
+
+    <script type="text/javascript">
+
+
+        function incrementCookie(pro_id) {
+            var aaa = parseInt(getCookie("Count"));
+            document.cookie = "Count" + "=" + callmeagain(aaa) + "; Path=/";
+
+            if (getCookie(pro_id) == "") {
+                document.cookie = pro_id + "=" + 1 + "; Path=/";
             }
-            if (c.indexOf(name) == 0) {
-                return c.substring(name.length, c.length);
+            else {
+                var qty = parseInt(getCookie(pro_id));
+                document.cookie = pro_id + "=" + (1 + qty) + "; Path=/";
+
             }
         }
-        return "";
-    }
+
+        function getCookie(cname) {
+
+            var name = cname + "=";
+            var decodedCookie = decodeURIComponent(document.cookie);
+            var ca = decodedCookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+
+        function validate() {
+
+            var a = document.forms["Form"]["search"].value;
+            if (a == null || a == "") {
+                alert("Please enter a search item in the search box..");
+            return false;
+            }
+            return true;
 
 
-</script>
+        }
+    </script>

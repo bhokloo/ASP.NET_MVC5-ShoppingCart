@@ -1,72 +1,141 @@
 ﻿
 @using ShoppingCart_ASP.NET_MVC5.Models;
 
-Cart<p id="count" value="" class="badge">@ViewBag.Count</p>
-@Html.ActionLink("Continue Shopping", "Home", "Home", "", null)
-<p>$<span id='subtotal'></span></p>
-<p>Cart count: <span id='count'></span></p>
+
 @{
-    <table border='1' id='cart'>
-        @foreach (var product in ViewBag.cart)
-        {
-        <tr>
-            <td rowspan='2'><img src="~/images/@product.pro_image" /><br />@product.pro_name<br />@product.pro_desc</td>
-            <td>Price:</td>
-            <td>@product.pro_price</td>
-            <td style="display: none">@product.pro_id</td>
-        </tr>
-            <tr>
-                <td>Quantity:</td>
-                <td><input type="number" oninput="sumprice()" value=@product.count /></td>
-            </tr>
-        }
-    </table>
 
-    @Html.ActionLink("Checkout", "Checkout", "Purchase", "", null)
+    var sessionId = ViewData["sessionId"];
+
+
+    ViewBag.Title = "Gallery";
+
+    var customerid = ViewBag.customer;
+
 }
+<div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12" style="text-align:right;">
+                <i class="glyphicon glyphicon-user"></i> @ViewBag.firstname &nbsp;&nbsp;
+                <i class="glyphicon glyphicon-retweet"></i> @Html.ActionLink("Home", "Home", "Home", null, null) &nbsp;&nbsp;
+                <i class="glyphicon glyphicon-eye-open"></i> @Html.ActionLink("Purchases", "Mypurchases", "Purchase", new { customer_id = @customerid }, null) &nbsp;&nbsp;
+                <i class="glyphicon glyphicon-log-out"></i> @Html.ActionLink("Logout", "Logout", "Auth", new { sessionId = @sessionId }, null)
+
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-sm-2" style="text-align:left;">
+                <button style="background-color:white;" class="btn btn-outline-success"><span style="color:darkred">Total Price :</span> $ <span id='subtotal' style="color:green"></span> &nbsp;&nbsp;&nbsp;<i class="glyphicon glyphicon-shopping-cart"></i></button>
+            </div>
+
+            <div class="col-sm-7" style="text-align:left;">
+
+                <button class="btn btn-outline-success">
+                    <i class="glyphicon glyphicon-check"></i> @Html.ActionLink("Checkout", "Checkout", "Purchase", null, null)
+                </button>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <button class="btn btn-outline-success">
+                    <i class="glyphicon glyphicon-retweet"></i> @Html.ActionLink("Continue Shopping", "Home", "Home", null, null)
+                </button>
+            </div>
+
+            <div class="col-sm-3" style="text-align:right;">
+                <form action="/Purchase/ViewCart" method="get">
+                    <button style="border-color:transparent;border-radius:30px;padding-top:5px;">
+                        <span class="glyphicon glyphicon-shopping-cart">
+                        </span>
+                        <span class="items">
+                            <p id="count" value="" class="badge">
+                                @ViewBag.Count
+                            </p>
+                        </span>
+                    </button>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
 
 
-<script>
+<br/>
+<p><span id='count'></span></p>
+<div class="container-fluid" style="width:100%">
+    <center>
+        <div class="row display-flex">
+            @{
+                <table class="table table-bordered" id='cart' style="width:70%; border-color:transparent; box-shadow: 0 1px 9px 0 rgba(0, 0, 0, 0.1), 0 1px 10px 0 rgba(0, 0, 0, 0.19);border-top-left-radius:30px;border-top-right-radius:30px;">
+                    @foreach (var product in ViewBag.cart)
+                    {
+                        <tr style="text-align:center">
 
-    window.onload = function () {
-        sumprice();
-    }
+                            <td colspan="2" style="border-color:transparent;">
+                                <img src="~/images/@product.pro_image" style="width:20%" />
+                                <span style="color:#337ab7">@product.pro_name</span>
+                                <span style="color:indianred">,</span>@product.pro_desc
+                            </td>
+                            <td style="border-color:transparent;padding:10px;">
+                                <button style="background-color:white;" class="btn btn-outline-success"><span style="color:darkred">Item Price :</span> $ <span id='subtotal' style="color:green"></span> &nbsp;&nbsp;&nbsp;</button>
+                            </td>
+                            <td style="border-color:transparent;text-align:left;">@product.pro_price &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                            <td style="display: none">@product.pro_id</td>
+                        </tr>
+                        <tr>
+                            <td style="border-top-color:transparent;border-right-color:transparent;text-align:right;width:80%">Quantity:</td>
+                            <td style="border-top-color:transparent;border-right-color:transparent;text-align:right;width:20%"><input type="number" style="width:padding:10px;border:2px solid darkgray;font-size:15px;" oninput="sumprice()" value=@product.count /></td>
 
-    function callmeagain(aa) {
-        aa = aa + 1;
-        document.getElementById("count").innerHTML = aa;
-        return aa;
-    }
+                        </tr>
+                    }
+                </table>
 
-</script>
-
-<script type="text/javascript">
-    function sumprice() {
-        var table, rows, price, i, qty, proid, subtotal, count;
-        subtotal = 0;
-        count = 0;
-        table = document.getElementById("cart");
-        rows = table.getElementsByTagName("tr");
-        for (i = 0; i < rows.length / 2; i++) {
-            price = parseInt(rows[i * 2].getElementsByTagName("td")[2].innerText);
-            qty = parseInt(rows[i * 2 + 1].getElementsByTagName("input")[0].value);
-            proid = rows[i * 2].getElementsByTagName("td")[3].innerText;
-            changeCookie(proid, qty);
-            if (qty == 0) {
-                rows[i * 2].style.display = "none";
-                rows[i * 2 + 1].style.display = "none";
             }
-            subtotal = subtotal + price * qty;
-            count = count + qty;
-        }
-        document.getElementById('subtotal').innerHTML = subtotal;
-        document.getElementById('count').innerHTML = count;
-        document.cookie = "Count=" + count + "; Path=/";
-    }
+        </div>
+    </center>
+    </div>
 
-    function changeCookie(pro_id, qty) {
-        document.cookie = pro_id + "=" + qty + "; Path=/";
-    }
+        <script>
 
-  
-</script>
+            window.onload = function () {
+                sumprice();
+            }
+
+            function callmeagain(aa) {
+                aa = aa + 1;
+                document.getElementById("count").innerHTML = aa;
+                return aa;
+            }
+
+        </script>
+
+        <script type="text/javascript">
+            function sumprice() {
+                var table, rows, price, i, qty, proid, subtotal, count;
+                subtotal = 0;
+                count = 0;
+                table = document.getElementById("cart");
+                rows = table.getElementsByTagName("tr");
+                for (i = 0; i < rows.length / 2; i++) {
+                    price = parseInt(rows[i * 2].getElementsByTagName("td")[2].innerText);
+                    qty = parseInt(rows[i * 2 + 1].getElementsByTagName("input")[0].value);
+                    proid = rows[i * 2].getElementsByTagName("td")[3].innerText;
+                    changeCookie(proid, qty);
+                    if (qty == 0) {
+                        rows[i * 2].style.display = "none";
+                        rows[i * 2 + 1].style.display = "none";
+                    }
+                    subtotal = subtotal + price * qty;
+                    count = count + qty;
+                }
+                document.getElementById('subtotal').innerHTML = subtotal;
+                document.getElementById('count').innerHTML = count;
+                document.cookie = "Count=" + count + "; Path=/";
+            }
+
+            function changeCookie(pro_id, qty) {
+                document.cookie = pro_id + "=" + qty + "; Path=/";
+            }
+
+
+        </script>

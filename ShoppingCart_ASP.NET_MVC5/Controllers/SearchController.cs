@@ -5,15 +5,21 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using ShoppingCart_ASP.NET_MVC5.Dao;
 
 namespace ShoppingCart_ASP.NET_MVC5.Controllers
 {
+    [SessionExpire]
     public class SearchController : Controller
     {
-        [HttpPost]
+        
         public ActionResult Partial(string search)
 
         {
+            if(search == "")
+            {
+                ViewBag.a = "Please enter a search item in the search box..";
+            }
             List<Product> pro = new List<Product>();
             using (SqlConnection conn = new SqlConnection("Server=.; Database=ShoppingCartT4; Integrated Security=true"))
             {
@@ -30,11 +36,19 @@ namespace ShoppingCart_ASP.NET_MVC5.Controllers
                         pro_desc = (string)reader["pro_desc"],
                         pro_price = (int)reader["pro_price"],
                         pro_image = (string)reader["pro_image"]
+
                     };
                     pro.Add(p);
                 }
             }
-            ViewData["partial"] = pro;
+            if (pro != null)
+            {
+                ViewData["partial"] = pro;
+            }
+            else
+                ViewBag.alert = "Sorry, the item is out of stock..";
+            ViewBag.Count = int.Parse(Request.Cookies["Count"].Value);
+            ViewBag.firstname = Request.Cookies["firstname"].Value;
             ViewBag.a = 2;
             return View("../Home/Home");
         }

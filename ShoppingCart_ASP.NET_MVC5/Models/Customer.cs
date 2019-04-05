@@ -16,7 +16,7 @@ namespace ShoppingCart_ASP.NET_MVC5.Models
         [Required(ErrorMessage = "Please enter a password.")]
         public string password { get; set; }
 
-        public string name { get; set; }
+        public string firstname { get; set; }
 
         public string session_id { get; set; }
     }

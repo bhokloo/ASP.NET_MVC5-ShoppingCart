@@ -130,6 +130,7 @@
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Dao\ProductDetails.cs" />
     <Compile Include="Dao\PurchaseHistory.cs" />
+    <Compile Include="Dao\SessionExpire.cs" />
     <Compile Include="Dao\SessionManagement.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -150,8 +151,16 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\analytics.png" />
     <Content Include="Images\cart.png" />
+    <Content Include="Images\cart1.png" />
     <Content Include="Images\charts.png" />
+    <Content Include="Images\logger.png" />
+    <Content Include="Images\ml.png" />
+    <Content Include="Images\numeric.jfif" />
+    <Content Include="Images\numeric.jpg" />
+    <Content Include="Images\numeric.png" />
+    <Content Include="Images\paypal.png" />
     <Content Include="Images\toothpaste.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -175,10 +184,7 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Auth\Index.cshtml" />
-    <Content Include="Views\Purchase\Purchase.cshtml" />
     <Content Include="Views\Shared\PartialGallery.cshtml" />
     <Content Include="Views\Auth\Login.cshtml" />
     <Content Include="Views\Home\Home.cshtml" />

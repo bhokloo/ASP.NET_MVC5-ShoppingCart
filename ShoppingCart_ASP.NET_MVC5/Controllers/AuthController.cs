@@ -9,7 +9,7 @@ using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using System.Security.Cryptography;
-using System.Text;
+
 
 namespace ShoppingCart_ASP.NET_MVC5.Controllers
 {
@@ -31,11 +31,17 @@ namespace ShoppingCart_ASP.NET_MVC5.Controllers
                 return View();
 
             Customer customer = CustomerDetails.GetCustomer(username);
-            if (customer.username != null)
+            if (customer == null)
+            {
+                ViewData["warning1"] = "Wrong Username, Please try again";
+                return View();
+            }
+
+            if(customer.username.Equals(username))
             {
                 if (customer.password != CalculateMD5Hash(password).ToLower())
                 {
-                    ViewData["warning"] = "Invalid password";
+                    ViewData["warning"] = "Wrong password, Please try again";
                     return View();
                 }
             }
@@ -46,11 +52,14 @@ namespace ShoppingCart_ASP.NET_MVC5.Controllers
             }
 
             HttpCookie cookie = new HttpCookie("customer_id");
+            HttpCookie firstname = new HttpCookie("firstname");
             HttpCookie Count = new HttpCookie("Count");
             Count.Value = "0";
             cookie.Value = customer.customer_id.ToString();
+            firstname.Value = customer.firstname;
             HttpContext.Response.Cookies.Add(cookie);
             HttpContext.Response.Cookies.Add(Count);
+            HttpContext.Response.Cookies.Add(firstname);
             return RedirectToAction("../Home/Home");
         }
 
