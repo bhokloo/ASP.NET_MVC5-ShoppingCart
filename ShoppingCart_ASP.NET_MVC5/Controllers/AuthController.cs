@@ -17,10 +17,9 @@ namespace ShoppingCart_ASP.NET_MVC5.Controllers
 
     public class AuthController : Controller
     {
-        //Login
+       
         public ActionResult Login()
         {
-            Debug.WriteLine("Welcome to HttpGet Method");
             return View();
         }
 
