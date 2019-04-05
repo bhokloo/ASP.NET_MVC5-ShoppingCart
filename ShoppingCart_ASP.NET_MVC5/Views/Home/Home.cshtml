@@ -25,7 +25,7 @@
     var customerid = ViewBag.customer;
 
 }
-<div style="position:fixed;top:48px;z-index:100;width:85%;background-color:white;">
+<div style="z-index:100;width:100%;background-color:white;">
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-12" style="text-align:right;">
@@ -77,7 +77,7 @@
 
         {
 
-            <div class="container-fluid" style="margin-top:80px">
+            <div class="container-fluid" style="margin-top:10px">
                 <div class="row display-flex">
                     @foreach (var product in (List<Product>)ViewData["pl"])
                     {
@@ -118,7 +118,7 @@
     <script>
 
 
-        function callmeagain(aaa) {
+        function increment(aaa) {
             aaa = aaa + 1;
             document.getElementById("count").innerHTML = aaa;
             return aaa;
@@ -130,7 +130,7 @@
 
         function incrementCookie(pro_id) {
             var aaa = parseInt(getCookie("Count"));
-            document.cookie = "Count" + "=" + callmeagain(aaa) + "; Path=/";
+            document.cookie = "Count" + "=" + increment(aaa) + "; Path=/";
 
             if (getCookie(pro_id) == "") {
                 document.cookie = pro_id + "=" + 1 + "; Path=/";

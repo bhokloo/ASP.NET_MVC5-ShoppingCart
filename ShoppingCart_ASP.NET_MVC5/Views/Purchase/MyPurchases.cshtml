@@ -12,7 +12,7 @@
             flex-direction: column;
         }
 </style>
-<div style="position:fixed;top:48px;z-index:100;width:85%;background-color:white;">
+<div style="width:100%;background-color:white;">
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-12" style="text-align:right;">
@@ -56,9 +56,9 @@
             </div>
         </div>
     </div>
-</div>   |
+</div>   
 @{
-<div class="container-fluid" style="margin-top:80px">
+<div class="container-fluid" style="margin-top:10px">
     <div class="row display-flex">
 
         @foreach (var pur in ViewBag.purchases)
@@ -83,7 +83,7 @@
                     <td colspan="2" style="text-align:center">
                         @if (pur.count > 1)
                         {
-                            <select name="cars" class="form-control" style="width:100%;">
+                            <select name="codes" class="form-control" style="width:100%;">
                                 @foreach (var code in pur.activation_code)
                                 {
                                     <option value="@code">@code</option>

@@ -96,17 +96,9 @@
     </div>
 
         <script>
-
             window.onload = function () {
                 sumprice();
             }
-
-            function callmeagain(aa) {
-                aa = aa + 1;
-                document.getElementById("count").innerHTML = aa;
-                return aa;
-            }
-
         </script>
 
         <script type="text/javascript">
@@ -120,11 +112,17 @@
                     price = parseInt(rows[i * 2].getElementsByTagName("td")[2].innerText);
                     qty = parseInt(rows[i * 2 + 1].getElementsByTagName("input")[0].value);
                     proid = rows[i * 2].getElementsByTagName("td")[3].innerText;
-                    changeCookie(proid, qty);
+                    
+
+                    if (qty <= 0) {
+                        rows[i * 2 + 1].getElementsByTagName("input")[0].value = 0;
+                        qty = parseInt(rows[i * 2 + 1].getElementsByTagName("input")[0].value);
+                    }
                     if (qty == 0) {
                         rows[i * 2].style.display = "none";
                         rows[i * 2 + 1].style.display = "none";
                     }
+                    changeCookie(proid, qty);
                     subtotal = subtotal + price * qty;
                     count = count + qty;
                 }
