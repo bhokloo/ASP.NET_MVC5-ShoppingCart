@@ -84,7 +84,8 @@
                         </tr>
                         <tr>
                             <td style="border-top-color:transparent;border-right-color:transparent;text-align:right;width:80%">Quantity:</td>
-                            <td style="border-top-color:transparent;border-right-color:transparent;text-align:right;width:20%"><input type="number" style="width:padding:10px;border:2px solid darkgray;font-size:15px;" oninput="sumprice()" value=@product.count /></td>
+                            <td style="border-top-color:transparent;border-right-color:transparent;text-align:right;width:20%">
+                            <input type="number" style="width:padding:10px;border:2px solid darkgray;font-size:15px;" oninput="sumprice()" value=@product.count /></td>
 
                         </tr>
                     }
@@ -127,7 +128,7 @@
                     count = count + qty;
                 }
                 document.getElementById('subtotal').innerHTML = subtotal;
-                document.getElementById('count').innerHTML = count;
+                document.getElementById('count').innerHTML = count || 0;
                 document.cookie = "Count=" + count + "; Path=/";
             }
 
